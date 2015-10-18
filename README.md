@@ -10,10 +10,13 @@ This library uses [StackExchange.Redis](https://github.com/StackExchange/StackEx
 var connectionMultiplexer = ConnectionMultiplexer.Connect("localhost,abortConnect=false"); // replace localhost with your redis db address
 ```
 
-* You can either create a RedisType by using RedisTypeFactory or by instantiating the desired type directly. 
+* You can either create a RedisType by using RedisTypeFactory or by instantiating the desired type directly. You should specify your type name so it will be stored in redis db under that name and can be accessed later.
 
 ```C#
 var redisTypeFactory = new RedisTypeFactory(connectionMultiplexer);
+
+// Create a redis dictionary under the name of "Person". (Person is a sample class with three fields (ID, Name, Age))
+var redisDictionary = redisTypeFactory.GetDictionary<int, Person>("Person");
 ```
 
 * Adding items to dictionary and iterate through it
