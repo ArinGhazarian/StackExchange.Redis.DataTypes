@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("StackExchange.Redis.DataTypes")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over StackExchange.Redis")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Arin Ghazarian")]
 [assembly: AssemblyProduct("StackExchange.Redis.DataTypes")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
