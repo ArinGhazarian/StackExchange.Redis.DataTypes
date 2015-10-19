@@ -1,7 +1,15 @@
 # StackExchange.Redis.DataTypes
 Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over StackExchange.Redis. By using this library you will be able to seamlessly replace your common *in-memory* collection types with types stored in redis db. All you need to do is to instantiate a redis collection type and continue coding as if you are working with common *in-memory* collections.
+
+# Installation
+You can install this library either from NuGet UI [StackExchange.Redis.DataTypes](https://www.nuget.org/packages/StackExchange.Redis.DataTypes), or from the package manager console:
+
+```
+PM> Install-Package StackExchange.Redis.DataTypes
+```
 # How to get started?
 This library uses [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis) to communicate with redis db and serialize/deserialize the data using [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) library. You don't need to worry about serialization/deserialization of your data because it works under the hood but you need to be familiar with [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis). Well at least you need to know how to configure and instantiate [ConnectionMultiplexer](https://github.com/StackExchange/StackExchange.Redis/blob/master/Docs/Basics.md). After you learned the [Basic usage of StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis/blob/master/Docs/Basics.md) you can start using this library.
+
 # Some code samples
 
 * Create a ConnectionMultiplexer. Creating ConnectionMultiplexer object is costly so it is recommended to store and reuse it.
@@ -95,4 +103,3 @@ redisSet.Add(1);
 redisSet.Add(1);
 redisSet.Add(2);
 ```
-
