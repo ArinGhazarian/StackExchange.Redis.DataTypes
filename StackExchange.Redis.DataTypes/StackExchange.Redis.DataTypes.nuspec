@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Arin Ghazarian</authors>
+    <owners>Arin Ghazarian</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ArinGhazarian/StackExchange.Redis.DataTypes/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ArinGhazarian/StackExchange.Redis.DataTypes</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over StackExchange.Redis</description>
+    <copyright>Copyright © Arin Ghazarian</copyright>
+    <tags>StackExchange.Redis Redis NoSQL Collection RedisCollection RedisDataType</tags>
+  </metadata>
+</package>
