@@ -8,7 +8,7 @@ You can install this library either from NuGet UI [StackExchange.Redis.DataTypes
 PM> Install-Package StackExchange.Redis.DataTypes
 ```
 # How to get started?
-This library uses [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis) to communicate with redis db and serialize/deserialize the data using [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) library. You don't need to worry about serialization/deserialization of your data because it works under the hood but you need to be familiar with [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis). Well at least you need to know how to configure and instantiate [ConnectionMultiplexer](https://github.com/StackExchange/StackExchange.Redis/blob/master/Docs/Basics.md). After you learned the [Basic usage of StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis/blob/master/Docs/Basics.md) you can start using this library.
+This library uses [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis) to communicate with redis db and serialize/deserialize the data using [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) library. You don't need to worry about serialization/deserialization of your data because it works under the hood but you need to be familiar with [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis). Well at least you need to know how to configure and instantiate [ConnectionMultiplexer](https://stackexchange.github.io/StackExchange.Redis/Basics). After you learned the [Basic usage of StackExchange.Redis](https://stackexchange.github.io/StackExchange.Redis/Basics) you can start using this library.
 
 # Some code samples
 
