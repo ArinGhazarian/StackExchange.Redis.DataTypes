@@ -4,7 +4,6 @@
 # User-specific files
 *.suo
 *.user
-<<<<<<< HEAD
 *.sln.docstates
 
 =======
@@ -14,40 +13,33 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
-<<<<<<< HEAD
 x64/
 =======
 [Rr]eleases/
 x64/
 x86/
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 build/
 bld/
 [Bb]in/
 [Oo]bj/
 
-<<<<<<< HEAD
 # Roslyn cache directories
 *.ide/
 =======
 # Visual Studo 2015 cache/options directory
 .vs/
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
-<<<<<<< HEAD
 #NUNIT
 =======
 # NUNIT
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 *.VisualState.xml
 TestResult.xml
 
@@ -147,7 +139,6 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-<<<<<<< HEAD
 ## TODO: Comment the next line if you want to checkin your
 ## web deploy settings but do note that will include unencrypted
 ## passwords
@@ -178,7 +169,6 @@ packages/*
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 
 # Windows Azure Build Output
 csx/
@@ -188,12 +178,10 @@ csx/
 AppPackages/
 
 # Others
-<<<<<<< HEAD
 sql/
 *.Cache
 =======
 *.[Cc]ache
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
@@ -203,10 +191,8 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
-<<<<<<< HEAD
 =======
 bower_components/
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -231,7 +217,6 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-<<<<<<< HEAD
 # LightSwitch generated files
 GeneratedArtifacts/
 _Pvt_Extensions/
@@ -245,4 +230,3 @@ ModelManifest.xml
 
 # Visual Studio 6 workspace options file
 *.opt
->>>>>>> bf67f32e1a2011026d65a5d35d9640ead17f5e88
