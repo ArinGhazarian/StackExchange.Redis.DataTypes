@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackExchange.Redis.DataTypes", "StackExchange.Redis.DataTypes\StackExchange.Redis.DataTypes.csproj", "{71126BFF-FB65-476E-AE63-5CD1C4777795}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackExchange.Redis.DataTypes", "src\StackExchange.Redis.DataTypes\StackExchange.Redis.DataTypes.csproj", "{71126BFF-FB65-476E-AE63-5CD1C4777795}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackExchange.Redis.DataTypes.Tests", "StackExchange.Redis.DataTypes.Tests\StackExchange.Redis.DataTypes.Tests.csproj", "{CCC92C25-626B-4A99-9F61-387DE639CE73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackExchange.Redis.DataTypes.Tests", "tests\StackExchange.Redis.DataTypes.Tests\StackExchange.Redis.DataTypes.Tests.csproj", "{CCC92C25-626B-4A99-9F61-387DE639CE73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
