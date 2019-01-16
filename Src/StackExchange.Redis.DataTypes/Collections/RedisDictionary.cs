@@ -11,7 +11,7 @@ namespace StackExchange.Redis.DataTypes.Collections
 		private const string RedisKeyTemplate = "Dictionary:{0}";
 
 		private static Exception KeyNotFoundException = new KeyNotFoundException("The given key was not present in the dictionary.");
-		private static Exception KeyNullException = new ArgumentNullException("key", "Value cannot be null");
+		private static Exception KeyNullException = new ArgumentNullException("key", "Value cannot be null.");
 		private static Exception KeyAlreadyExistsException = new ArgumentException("An item with the same key has already been added.");
 
 		private readonly IDatabase database;
@@ -132,7 +132,7 @@ namespace StackExchange.Redis.DataTypes.Collections
 		{
 			TValue value;
 			bool keyExists = TryGetValue(item.Key, out value);
-			return keyExists && object.Equals(item.Value, value);
+			return keyExists && EqualityComparer<TValue>.Default.Equals(item.Value, value);
 		}
 
 		void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
@@ -197,12 +197,17 @@ namespace StackExchange.Redis.DataTypes.Collections
 
 		private bool Set(TKey key, TValue value)
 		{
+			if (IsKeyNull(key))
+			{
+				throw KeyNullException;
+			}
+
 			return database.HashSet(redisKey, key.ToRedisValue(), value.ToRedisValue());
 		}
 
 		private bool IsKeyNull(TKey key)
 		{
-			return !typeof(TKey).IsValueType && key == null;
+			return key == null;
 		}
 	}
 }

@@ -10,6 +10,7 @@ namespace StackExchange.Redis.DataTypes.Collections
 	{
 		private const string RedisKeyTemplate = "List:{0}";
 		private const string RedisIndexOutOfRangeExceptionMessage = "ERR index out of range";
+		private const string RedisNoSuchKeyExceptionMessage = "ERR no such key";
 
 		private static Exception IndexOutOfRangeException = new ArgumentOutOfRangeException("index", "Index must be within the bounds of the List.");
 
@@ -53,7 +54,7 @@ namespace StackExchange.Redis.DataTypes.Collections
 			}
 			catch (RedisServerException redisServerException)
 			{
-				if (IsIndexOutOfRangeExcepiton(redisServerException))
+				if (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
 				{
 					throw IndexOutOfRangeException;
 				}
@@ -66,11 +67,11 @@ namespace StackExchange.Redis.DataTypes.Collections
 			string deleteFlag = Guid.NewGuid().ToString();
 			try
 			{
-				database.ListSetByIndex(redisKey, index, deleteFlag, CommandFlags.FireAndForget);
+				database.ListSetByIndex(redisKey, index, deleteFlag);
 			}
 			catch (RedisServerException redisServerException)
 			{
-				if (IsIndexOutOfRangeExcepiton(redisServerException))
+				if (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
 				{
 					throw IndexOutOfRangeException;
 				}
@@ -81,22 +82,16 @@ namespace StackExchange.Redis.DataTypes.Collections
 
 		public T this[int index]
 		{
-			get
-			{
-				try
-				{
-					return database.ListGetByIndex(redisKey, index).To<T>();
-				}
-				catch (RedisServerException redisServerException)
-				{
-					if (IsIndexOutOfRangeExcepiton(redisServerException))
-					{
-						throw IndexOutOfRangeException;
-					}
-					throw;
-				}
-			}
-			set
+      get
+      {
+        var redisValue = database.ListGetByIndex(redisKey, index);
+        if (!redisValue.HasValue)
+        {
+          throw IndexOutOfRangeException;
+        }
+        return redisValue.To<T>();
+      }
+      set
 			{
 				Insert(index, value);
 			}
@@ -239,6 +234,11 @@ namespace StackExchange.Redis.DataTypes.Collections
 		private bool IsIndexOutOfRangeExcepiton(RedisServerException redisServerException)
 		{
 			return redisServerException.Message == RedisIndexOutOfRangeExceptionMessage;
+		}
+
+		private bool IsNoSuchKeyExcption(RedisServerException redisServerException)
+		{
+			return redisServerException.Message == RedisNoSuchKeyExceptionMessage;
 		}
 	}
 }
