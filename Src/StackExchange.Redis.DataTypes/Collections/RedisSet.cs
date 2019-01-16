@@ -38,6 +38,10 @@ namespace StackExchange.Redis.DataTypes.Collections
 			{
 				throw new ArgumentNullException("items");
 			}
+			if (!items.Any())
+			{
+				return 0;
+			}
 
 			return database.SetAdd(redisKey, items.ToRedisValues());
 		}
