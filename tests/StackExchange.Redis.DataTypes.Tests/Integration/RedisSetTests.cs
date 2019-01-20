@@ -1413,6 +1413,26 @@ namespace StackExchange.Redis.DataTypes.Tests.Integration
                 .Throw<ArgumentNullException>();
         }
 
+        [Fact]
+        public void Ctor_Should_Throw_If_Database_Is_Null()
+        {
+            Action action = () => new RedisSet<int>(null, "set");
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: database");
+        }
+
+        [Fact]
+        public void Ctor_Should_Throw_If_Name_Is_Null()
+        {
+            Action action = () => new RedisSet<int>(connectionMultiplexer.GetDatabase(), null);
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: name");
+        }
+
         private RedisSet<T> GetSet<T>(params T[] items)
         {
             var set = new RedisSet<T>(connectionMultiplexer.GetDatabase(), Guid.NewGuid().ToString());

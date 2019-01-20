@@ -8,15 +8,12 @@ namespace StackExchange.Redis.DataTypes.Tests.Integration
         public ConnectionMultiplexerFixture()
         {
             ConnectionMultiplexer = StackExchange.Redis.ConnectionMultiplexer.Connect("localhost,abortConnect=false,allowAdmin=true");
+            var endpoint = ConnectionMultiplexer.GetEndPoints(true)[0];
+            ConnectionMultiplexer.GetServer(endpoint).FlushDatabase();
         }
 
         public IConnectionMultiplexer ConnectionMultiplexer { get; private set; }
 
-        public void Dispose()
-        {
-            var endpoint = ConnectionMultiplexer.GetEndPoints(true)[0];
-            ConnectionMultiplexer.GetServer(endpoint).FlushDatabase();
-            ConnectionMultiplexer?.Dispose();
-        }
+        public void Dispose() => ConnectionMultiplexer?.Dispose();
     }
 }

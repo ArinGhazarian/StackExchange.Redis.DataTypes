@@ -279,6 +279,26 @@ namespace StackExchange.Redis.DataTypes.Tests.Integration
                 .WithMessage(KEY_NOT_FOUND_EXCEPTION_MESSAGE);
         }
 
+        [Fact]
+        public void Ctor_Should_Throw_If_Database_Is_Null()
+        {
+            Action action = () => new RedisDictionary<int, int>(null, "dic");
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: database");
+        }
+
+        [Fact]
+        public void Ctor_Should_Throw_If_Name_Is_Null()
+        {
+            Action action = () => new RedisDictionary<int, int>(connectionMultiplexer.GetDatabase(), null);
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: name");
+        }
+
         private RedisDictionary<int, string> GetDictionary()
         {
             var dic = new RedisDictionary<int, string>(connectionMultiplexer.GetDatabase(), "dic");

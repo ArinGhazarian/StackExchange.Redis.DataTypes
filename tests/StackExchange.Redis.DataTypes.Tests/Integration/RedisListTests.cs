@@ -263,6 +263,26 @@ namespace StackExchange.Redis.DataTypes.Tests.Integration
             list[2].Should().Be(3);
         }
         
+        [Fact]
+        public void Ctor_Should_Throw_If_Database_Is_Null()
+        {
+            Action action = () => new RedisList<int>(null, "list");
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: database");
+        }
+
+        [Fact]
+        public void Ctor_Should_Throw_If_Name_Is_Null()
+        {
+            Action action = () => new RedisList<int>(connectionMultiplexer.GetDatabase(), null);
+            action
+                .Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Value cannot be Null.\nParameter name: name");
+        }
+
         private RedisList<T> GetList<T>()
         {
             var list = new RedisList<T>(connectionMultiplexer.GetDatabase(), "list");

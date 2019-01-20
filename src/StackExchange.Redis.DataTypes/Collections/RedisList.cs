@@ -2,243 +2,205 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace StackExchange.Redis.DataTypes.Collections
 {
-	public class RedisList<T> : IList<T>, ICollection<T>
-	{
-		private const string RedisKeyTemplate = "List:{0}";
-		private const string RedisIndexOutOfRangeExceptionMessage = "ERR index out of range";
-		private const string RedisNoSuchKeyExceptionMessage = "ERR no such key";
+    public class RedisList<T> : IList<T>, ICollection<T>
+    {
+        private const string RedisKeyTemplate = "List:{0}";
+        private const string RedisIndexOutOfRangeExceptionMessage = "ERR index out of range";
+        private const string RedisNoSuchKeyExceptionMessage = "ERR no such key";
 
-		private static Exception IndexOutOfRangeException = new ArgumentOutOfRangeException("index", "Index must be within the bounds of the List.");
+        private static Exception IndexOutOfRangeException = new ArgumentOutOfRangeException("index", "Index must be within the bounds of the List.");
 
-		private readonly IDatabase database;
-		private readonly string redisKey;
+        private readonly IDatabase database;
+        private readonly string redisKey;
 
-		public RedisList(IDatabase database, string name)
-		{
-			if (database == null)
-			{
-				throw new ArgumentNullException("database");
-			}
-			if (name == null)
-			{
-				throw new ArgumentNullException("name");
-			}
-
-			this.database = database;
-			this.redisKey = string.Format(RedisKeyTemplate, name);
-		}
-
-		public int IndexOf(T item)
-		{
-			int index = 0;
-			foreach (var member in this)
-			{
-				if (EqualityComparer<T>.Default.Equals(member, item))
-				{
-					return index;
-				}
-				index++;
-			}
-			return -1;
-		}
-
-		public void Insert(int index, T item)
-		{
-			try
-			{
-				database.ListSetByIndex(redisKey, index, item.ToRedisValue());
-			}
-			catch (RedisServerException redisServerException)
-			{
-				if (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
-				{
-					throw IndexOutOfRangeException;
-				}
-				throw;
-			}
-		}
-
-		public void RemoveAt(int index)
-		{
-			string deleteFlag = Guid.NewGuid().ToString();
-			try
-			{
-				database.ListSetByIndex(redisKey, index, deleteFlag);
-			}
-			catch (RedisServerException redisServerException)
-			{
-				if (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
-				{
-					throw IndexOutOfRangeException;
-				}
-				throw;
-			}
-			database.ListRemove(redisKey, deleteFlag, flags: CommandFlags.FireAndForget);
-		}
-
-		public T this[int index]
-		{
-      get
-      {
-        var redisValue = database.ListGetByIndex(redisKey, index);
-        if (!redisValue.HasValue)
+        public RedisList(IDatabase database, string name)
         {
-          throw IndexOutOfRangeException;
+            this.database = database ?? throw new ArgumentNullException(nameof(database));
+            this.redisKey = string.Format(RedisKeyTemplate, name ?? throw new ArgumentNullException(nameof(name)));
         }
-        return redisValue.To<T>();
-      }
-      set
-			{
-				Insert(index, value);
-			}
-		}
 
-		public void Add(T item)
-		{
-			database.ListRightPush(redisKey, item.ToRedisValue());
-		}
+        public int IndexOf(T item)
+        {
+            int index = 0;
+            foreach (var member in this)
+            {
+                if (EqualityComparer<T>.Default.Equals(member, item))
+                {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
+        }
 
-		public void Clear()
-		{
-			database.KeyDelete(redisKey);
-		}
+        public void Insert(int index, T item)
+        {
+            try
+            {
+                database.ListSetByIndex(redisKey, index, item.ToRedisValue());
+            }
+            catch (RedisServerException redisServerException)
+            when (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
+            {
+                throw IndexOutOfRangeException;
+            }
+        }
 
-		public bool Contains(T item)
-		{
-			return IndexOf(item) != -1;
-		}
+        public void RemoveAt(int index)
+        {
+            string deleteFlag = Guid.NewGuid().ToString();
+            try
+            {
+                database.ListSetByIndex(redisKey, index, deleteFlag);
+            }
+            catch (RedisServerException redisServerException)
+			when (IsIndexOutOfRangeExcepiton(redisServerException) || IsNoSuchKeyExcption(redisServerException))
+            {
+                throw IndexOutOfRangeException;
+            }
+            database.ListRemove(redisKey, deleteFlag, flags: CommandFlags.FireAndForget);
+        }
 
-		void ICollection<T>.CopyTo(T[] array, int index)
-		{
-			if (array == null)
-			{
-				throw new ArgumentNullException("array");
-			}
-			if (index < 0 || index > array.Length)
-			{
-				throw new ArgumentOutOfRangeException("index");
-			}
-			if (array.Length - index < this.Count)
-			{
-				throw new ArgumentException("Destination array is not long enough to copy all the items in the collection. Check array index and length.");
-			}
+        public T this[int index]
+        {
+            get
+            {
+                var redisValue = database.ListGetByIndex(redisKey, index);
+                if (!redisValue.HasValue)
+                {
+                    throw IndexOutOfRangeException;
+                }
+                return redisValue.To<T>();
+            }
+            set
+            {
+                Insert(index, value);
+            }
+        }
 
-			foreach (var item in this)
-			{
-				array[index++] = item;
-			}
-		}
+        public void Add(T item) => database.ListRightPush(redisKey, item.ToRedisValue());
 
-		public int Count
-		{
-			get
-			{
-				long count = database.ListLength(redisKey);
-				if (count > int.MaxValue)
-				{
-					throw new OverflowException("Count exceeds maximum value of integer.");
-				}
-				return (int)count;
-			}
-		}
+        public void Clear() => database.KeyDelete(redisKey);
 
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+        public bool Contains(T item) => IndexOf(item) != -1;
 
-		public bool Remove(T item)
-		{
-			int index = IndexOf(item);
-			if (index != -1)
-			{
-				RemoveAt(index);
-				return true;
-			}
-			return false;
-		}
+        void ICollection<T>.CopyTo(T[] array, int index)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (index < 0 || index > array.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+            if (array.Length - index < this.Count)
+            {
+                throw new ArgumentException("Destination array is not long enough to copy all the items in the collection. Check array index and length.");
+            }
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			return new Enumerator(this);
-		}
+            foreach (var item in this)
+            {
+                array[index++] = item;
+            }
+        }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+        public int Count
+        {
+            get
+            {
+                long count = database.ListLength(redisKey);
+                if (count > int.MaxValue)
+                {
+                    throw new OverflowException("Count exceeds maximum value of integer.");
+                }
+                return (int)count;
+            }
+        }
 
-		private class Enumerator : IEnumerator<T>
-		{
-			private int index;
-			private T current;
-			private int listSize;
-			private RedisList<T> redisList;
+        public bool IsReadOnly => false;
 
-			public Enumerator(RedisList<T> redisList)
-			{
-				this.redisList = redisList;
-				this.index = 0;
-				this.listSize = redisList.Count;
-				this.current = default(T);
-			}
+        public bool Remove(T item)
+        {
+            int index = IndexOf(item);
+            if (index != -1)
+            {
+                RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
 
-			public T Current
-			{
-				get
-				{
-					return current;
-				}
-			}
+        public IEnumerator<T> GetEnumerator() => new Enumerator(this);
 
-			public void Dispose()
-			{
-			}
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
-			object System.Collections.IEnumerator.Current
-			{
-				get
-				{
-					if (index == 0 || index == listSize + 1)
-					{
-						throw new InvalidOperationException("Enumeration has either not started or has already finished.");
-					}
-					return Current;
-				}
-			}
+        private class Enumerator : IEnumerator<T>
+        {
+            private int index;
+            private T current;
+            private int listSize;
+            private RedisList<T> redisList;
 
-			public bool MoveNext()
-			{
-				if (index >= listSize)
-				{
-					index = listSize + 1;
-					current = default(T);
-					return false;
-				}
-				current = redisList[index];
-				++index;
-				return true;
-			}
+            public Enumerator(RedisList<T> redisList)
+            {
+                this.redisList = redisList;
+                this.index = 0;
+                this.listSize = redisList.Count;
+                this.current = default(T);
+            }
 
-			public void Reset()
-			{
-				index = 0;
-				current = default(T);
-			}
-		}
+            public T Current
+            {
+                get
+                {
+                    return current;
+                }
+            }
 
-		private bool IsIndexOutOfRangeExcepiton(RedisServerException redisServerException)
-		{
-			return redisServerException.Message == RedisIndexOutOfRangeExceptionMessage;
-		}
+            public void Dispose()
+            {
+            }
 
-		private bool IsNoSuchKeyExcption(RedisServerException redisServerException)
-		{
-			return redisServerException.Message == RedisNoSuchKeyExceptionMessage;
-		}
-	}
+            object System.Collections.IEnumerator.Current
+            {
+                get
+                {
+                    if (index == 0 || index == listSize + 1)
+                    {
+                        throw new InvalidOperationException("Enumeration has either not started or has already finished.");
+                    }
+                    return Current;
+                }
+            }
+
+            public bool MoveNext()
+            {
+                if (index >= listSize)
+                {
+                    index = listSize + 1;
+                    current = default(T);
+                    return false;
+                }
+                current = redisList[index];
+                ++index;
+                return true;
+            }
+
+            public void Reset()
+            {
+                index = 0;
+                current = default(T);
+            }
+        }
+
+        private bool IsIndexOutOfRangeExcepiton(RedisServerException redisServerException) => 
+			redisServerException.Message == RedisIndexOutOfRangeExceptionMessage;
+
+        private bool IsNoSuchKeyExcption(RedisServerException redisServerException) => 
+			redisServerException.Message == RedisNoSuchKeyExceptionMessage;
+    }
 }
