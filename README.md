@@ -2,11 +2,17 @@
 Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over StackExchange.Redis. By using this library you will be able to seamlessly replace your common *in-memory* collection types with types stored in redis db. All you need to do is to instantiate a redis collection type and continue coding as if you are working with common *in-memory* collections.
 
 # Installation
-You can install this library either from NuGet UI [StackExchange.Redis.DataTypes](https://www.nuget.org/packages/StackExchange.Redis.DataTypes), or from the package manager console:
+You can install this library from NuGet UI [StackExchange.Redis.DataTypes](https://www.nuget.org/packages/StackExchange.Redis.DataTypes), or either of the following:
 
+* Package manager console (Windows)
 ```
 PM> Install-Package StackExchange.Redis.DataTypes
 ```
+* .NET CLI (Windows, Linux, Mac)
+```
+> dotnet add package StackExchange.Redis.DataTypes
+```
+
 # How to get started?
 This library uses [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis) to communicate with redis db and serialize/deserialize the data using [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) library. You don't need to worry about serialization/deserialization of your data because it works under the hood but you need to be familiar with [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis). Well at least you need to know how to configure and instantiate [ConnectionMultiplexer](https://stackexchange.github.io/StackExchange.Redis/Basics). After you learned the [Basic usage of StackExchange.Redis](https://stackexchange.github.io/StackExchange.Redis/Basics) you can start using this library.
 
@@ -36,7 +42,7 @@ redisDictionary.Add(3, new Person { ID = 3, Name = "Lara", Age = 30 });
 
 foreach (var person in redisDictionary)
 {
-	Console.WriteLine("ID: {0}, Name: {1}, Age: {2}", person.Value.ID, person.Value.Name, person.Value.Age);
+    Console.WriteLine("ID: {0}, Name: {1}, Age: {2}", person.Value.ID, person.Value.Name, person.Value.Age);
 }
 ```
 
@@ -70,12 +76,12 @@ var redisList = new RedisList<int>(connectionMultiplexer.GetDatabase(), "Numbers
 ```C#
 for (int i = 0; i < 10; i++)
 {
-	redisList.Add(i);
+    redisList.Add(i);
 }
 
 foreach (var number in redisList)
 {
-	Console.WriteLine(number);
+    Console.WriteLine(number);
 }
 ```
 
