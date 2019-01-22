@@ -8,7 +8,7 @@
     <Copyright>Copyright © Arin Ghazarian 2019</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ArinGhazarian/StackExchange.Redis.DataTypes</RepositoryUrl>
-    <PackageTags>StackExchange.Redis;Redis;NoSQL;Collection;RedisCollection;RedisDataType</PackageTags>
+    <PackageTags>StackExchange.Redis;Redis;NoSQL;Collection;RedisCollection;RedisDataType;.NET;dotnet;Dictionary;List;Set</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="StackExchange.Redis" Version="2.0.519"/>
