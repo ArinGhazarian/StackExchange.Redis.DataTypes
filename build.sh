@@ -7,7 +7,7 @@ else
     echo "Docker is not installed. Please install Docker and try again."
 fi
 
-dotnet test
+dotnet test tests/StackExchange.Redis.DataTypes.Tests
 
 if [[ $? -eq 0 && "$1" == "nuget" ]]; then
     dotnet pack --configuration release
