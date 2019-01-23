@@ -33,7 +33,7 @@ var redisTypeFactory = new RedisTypeFactory(connectionMultiplexer);
 var redisDictionary = redisTypeFactory.GetDictionary<int, Person>("Person");
 ```
 
-* Adding items to dictionary and iterate through it
+* Adding items to the dictionary and iterate through them
 
 ```C#
 redisDictionary.Add(1, new Person { ID = 1, Name = "Steve", Age = 20 });
