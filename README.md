@@ -71,7 +71,7 @@ redisDictionary.Clear();
 var redisList = new RedisList<int>(connectionMultiplexer.GetDatabase(), "Numbers");
 ```
 
-* Adding some numbers to redis list and iterate through it
+* Adding some numbers to redis list and iterate through them
 
 ```C#
 for (int i = 0; i < 10; i++)
