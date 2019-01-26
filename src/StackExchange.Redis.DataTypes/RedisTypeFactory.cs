@@ -3,33 +3,19 @@ using System;
 
 namespace StackExchange.Redis.DataTypes
 {
-	public class RedisTypeFactory : IRedisTypeFactory
-	{
-		private readonly IDatabase database;
+    public class RedisTypeFactory : IRedisTypeFactory
+    {
+        private readonly IDatabase database;
 
-		public RedisTypeFactory(IConnectionMultiplexer connectionMultiplexer)
-		{
-			if (connectionMultiplexer == null)
-			{
-				throw new ArgumentNullException("connectionMultiplexer");
-			}
+        public RedisTypeFactory(IConnectionMultiplexer connectionMultiplexer)
+        {
+            this.database = connectionMultiplexer?.GetDatabase() ?? throw new ArgumentNullException(nameof(connectionMultiplexer));
+        }
 
-			this.database = connectionMultiplexer.GetDatabase();
-		}
+        public RedisDictionary<TKey, TValue> GetDictionary<TKey, TValue>(string name) => new RedisDictionary<TKey, TValue>(database, name);
 
-		public RedisDictionary<TKey, TValue> GetDictionary<TKey, TValue>(string name)
-		{
-			return new RedisDictionary<TKey, TValue>(database, name);
-		}
+        public RedisSet<T> GetSet<T>(string name) => new RedisSet<T>(database, name);
 
-		public RedisSet<T> GetSet<T>(string name)
-		{
-			return new RedisSet<T>(database, name);
-		}
-
-		public RedisList<T> GetList<T>(string name)
-		{
-			return new RedisList<T>(database, name);
-		}
-	}
+        public RedisList<T> GetList<T>(string name) => new RedisList<T>(database, name);
+    }
 }
