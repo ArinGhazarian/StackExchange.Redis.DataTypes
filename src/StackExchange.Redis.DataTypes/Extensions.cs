@@ -5,26 +5,20 @@ using System.Linq;
 
 namespace StackExchange.Redis.DataTypes
 {
-	public static class Extensions
-	{
-		public static RedisValue[] ToRedisValues<T>(this IEnumerable<T> source)
-		{
-			if (source == null)
-			{
-				throw new ArgumentNullException("source");
-			}
+    public static class Extensions
+    {
+        public static RedisValue[] ToRedisValues<T>(this IEnumerable<T> source)
+        {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
-			return source.Select(item => (RedisValue)JsonConvert.SerializeObject(item)).ToArray();
-		}
+            return source.Select(item => (RedisValue)JsonConvert.SerializeObject(item)).ToArray();
+        }
 
-		public static T To<T>(this RedisValue redisValue)
-		{
-			return JsonConvert.DeserializeObject<T>(redisValue);
-		}
+        public static T To<T>(this RedisValue redisValue) => JsonConvert.DeserializeObject<T>(redisValue);
 
-		public static string ToRedisValue(this object source)
-		{
-			return JsonConvert.SerializeObject(source);
-		}
-	}
+        public static string ToRedisValue(this object source) => JsonConvert.SerializeObject(source);
+    }
 }
