@@ -1,4 +1,4 @@
-# How to run tests
+# How to run the tests
 
 In order to run the integration tests, an instance of Redis should be running locally. The easiest way to run Redis locally is to spin up a docker contiainer. In order to do so, follow the steps below:
 
