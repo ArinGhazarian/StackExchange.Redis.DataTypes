@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StackExchange.Redis.DataTypes.Collections
 {
-    public class RedisList<T> : IList<T>, ICollection<T>
+    public class RedisList<T> : IList<T>
     {
         private const string RedisKeyTemplate = "List:{0}";
         private const string RedisIndexOutOfRangeExceptionMessage = "ERR index out of range";

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace StackExchange.Redis.DataTypes.Collections
 {
-    public class RedisDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ICollection<KeyValuePair<TKey, TValue>>
+    public class RedisDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private const string RedisKeyTemplate = "Dictionary:{0}";
 

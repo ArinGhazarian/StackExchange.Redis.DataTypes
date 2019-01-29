@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace StackExchange.Redis.DataTypes.Collections
 {
-    public class RedisSet<T> : ISet<T>, ICollection<T>
+    public class RedisSet<T> : ISet<T>
     {
         private const string RedisKeyTemplate = "Set:{0}";
 
