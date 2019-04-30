@@ -91,7 +91,7 @@ foreach (var number in redisList)
 redisList.Clear();
 ```
 
-* Using a DI container (This sample used [Unity](https://github.com/unitycontainer/unity))
+* Using a DI container (This sample uses [Unity](https://github.com/unitycontainer/unity))
 
 ```C#
 var container = new UnityContainer();
