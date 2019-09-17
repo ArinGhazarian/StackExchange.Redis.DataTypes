@@ -1,5 +1,5 @@
 # StackExchange.Redis.DataTypes
-Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over StackExchange.Redis. By using this library you will be able to seamlessly replace your common *in-memory* collection types with types stored in redis db. All you need to do is to instantiate a redis collection type and continue coding as if you are working with common *in-memory* collections.
+Implementation of common .NET collection types (i.e IDictionary, ISet, IList) via abstraction over [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis). By using this library you will be able to seamlessly replace your common *in-memory* collection types with types stored in redis db. All you need to do is to instantiate a redis collection type and continue coding as if you are working with common *in-memory* collections.
 
 # Installation
 You can install this library from NuGet UI [StackExchange.Redis.DataTypes](https://www.nuget.org/packages/StackExchange.Redis.DataTypes), or either of the following:
