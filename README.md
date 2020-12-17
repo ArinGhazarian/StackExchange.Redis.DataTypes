@@ -91,7 +91,12 @@ foreach (var number in redisList)
 redisList.Clear();
 ```
 
-* Using a DI container (This sample uses [Unity](https://github.com/unitycontainer/unity))
+* In your `ConfigureServices(IServiceCollection services)` method
+```C#
+services.AddStackExchangeRedisDataTypes();
+```
+
+* or using a DI container (This sample uses [Unity](https://github.com/unitycontainer/unity))
 
 ```C#
 var container = new UnityContainer();
