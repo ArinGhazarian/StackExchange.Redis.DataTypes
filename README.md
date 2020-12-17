@@ -93,6 +93,7 @@ redisList.Clear();
 
 * In your `ConfigureServices(IServiceCollection services)` method
 ```C#
+services.AddSingleton(ConnectionMultiplexer.Connect(/* Your redis configuration here. */));
 services.AddStackExchangeRedisDataTypes();
 ```
 
