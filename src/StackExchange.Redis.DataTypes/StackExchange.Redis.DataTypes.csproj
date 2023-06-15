@@ -11,7 +11,7 @@
     <PackageTags>StackExchange.Redis;Redis;NoSQL;Collection;RedisCollection;RedisDataType;.NET;dotnet;Dictionary;List;Set</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="StackExchange.Redis" Version="2.0.519"/>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1"/>
+    <PackageReference Include="StackExchange.Redis" Version="2.6.116" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>
